@@ -6,13 +6,16 @@
 		"build": "next build",
 		"start": "next start -p 3005",
 		"lint": "next lint",
-		"test": "next test",
+		"test": "jest --watch",
 		"eject": "next eject",
 		"netlify:deploy": "netlify deploy --dir=./build -p -m \"$(git log -1 --pretty=%B)\""
 	},
 	"dependencies": {
 		"@ant-design/icons": "^4.7.0",
+		"@testing-library/jest-dom": "^5.16.4",
+		"@types/jest": "^28.1.0",
 		"antd": "^4.17.3",
+		"jest": "^28.1.0",
 		"netlify-cli": "^10.4.0",
 		"next": "12.0.7",
 		"react": "17.0.2",
