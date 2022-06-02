@@ -13,12 +13,16 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
       - run: yarn install
+      - run:
+          name: Checking the Node.js version
+          command: |
+            node --version
       - save_cache:
           paths:
             - node_modules
           key: v1-dependicies -{{checksum "package.json"}}
 
       # run tests
-      - run: yarn test
+      # - run: yarn test
       - run: yarn build
       # - run: yarn netlify:deploy
