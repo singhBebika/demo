@@ -19,6 +19,5 @@ jobs:
           key: v1-dependicies -{{checksum "package.json"}}
 
       # run tests
-      - run: yarn test
       - run: yarn build
       - run: yarn netlify:deploy
