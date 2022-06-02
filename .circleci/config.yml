@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: node:16.13.0
     working_directory: ~/repo
-    steps:
+    step:
       - checkout
       # Download and cache dependicies
       - restore_cache:
