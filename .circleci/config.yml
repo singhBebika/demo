@@ -30,4 +30,4 @@ jobs:
       - image: node:16.13.0
     steps:
       - checkout
-      - run: ssh -oStrictHostKeyChecking=no -v $bebika_singh@$34.146.42.180 "./deploy.sh"
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
