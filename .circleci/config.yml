@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: node:16.13.0
-    working_directory: ~/repo
+    working_directory: ~/demo
     steps:
       - checkout
       # Download and cache dependicies
@@ -22,7 +22,12 @@ jobs:
             - node_modules
           key: v1-dependicies -{{checksum "package.json"}}
 
-      # run tests
-      # - run: yarn test
       - run: yarn build
-      # - run: yarn netlify:deploy
+
+jobs:
+  pull-and-build:
+    docker:
+      - image: node:16.13.0
+    steps:
+      - checkout
+      - run: ssh -oStrictHostKeyChecking=no -v $bebika_singh@$35.194.100.46 "./deploy.sh"
