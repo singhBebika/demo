@@ -24,3 +24,15 @@ jobs:
           key: v1-dependicies -{{checksum "package.json"}}
 
       - run: yarn build
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+
+# Orchestrate our job run sequence
+workflows:
+  version: 2
+  build-project:
+    jobs:
+      - pull-and-build:
+          filters:
+            branches:
+              only:
+                - main
