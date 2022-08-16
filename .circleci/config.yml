@@ -25,12 +25,12 @@ jobs:
 
       - run: yarn build
 
-  # pull-and-build:
-  #   docker:
-  #     - image: node:16.13.0
-  #   steps:
-  #     - checkout
-  #     - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "~/deploy.sh"
+  pull-and-build:
+    docker:
+      - image: node:16.13.0
+    steps:
+      - checkout
+      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "~/deploy.sh"
 # workflows:
 #   version: 2
 #   build-project:
