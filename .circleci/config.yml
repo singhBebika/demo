@@ -30,7 +30,7 @@ jobs:
       - image: node:16.13.0
     steps:
       - checkout
-      - run: 
+      - run:
         name: Run Package
         command: |
-        ssh -o StrictHostKeyChecking=no $USER@$IP "~/deploy.sh"
+          ssh -o StrictHostKeyChecking=no $USER@$IP "~/deploy.sh"
