@@ -98,7 +98,7 @@ const Login = () => {
 			</LoginBanner>
 			<LoginContent>
 				<LoginWrapper>
-					<h1 className="heading">Welcome Back To opp !</h1>
+					<h1 className="heading">Welcome Back To opps !</h1>
 					<h3 className="sub-heading">Login to continue</h3>
 					<TextFieldWrapper>
 						<form>
