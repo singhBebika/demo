@@ -24,4 +24,4 @@ jobs:
           key: v1-dependicies -{{checksum "package.json"}}
 
       - run: yarn build
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$IP "./deploy.sh"
+      - run: ssh -oStrictHostKeyChecking=no -v circleci@34.146.42.180 "./deploy.sh"
