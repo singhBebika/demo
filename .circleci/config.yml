@@ -8,22 +8,19 @@ jobs:
     working_directory: ~/demo
     steps:
       - checkout
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{checksum "package.json"}}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: yarn install
+      - node/install
       - run:
-          name: Checking the Node.js version
-          command: |
-            node --version
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependicies -{{checksum "package.json"}}
-
-      - run: yarn build
+          name: Check current version of node
+          command: node -v
+      - run:
+          name: Get and install node version manager.
+          command: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+      - run:
+          name: Install Node version 16.10.0 using NVM
+          command: nvm install 16.10.0
+      - run:
+          name: Use Node version 12
+          command: nvm use 16.10.0
       - run:
           name: Run package
           command: |
