@@ -33,4 +33,4 @@ jobs:
       - run:
         name: Run Package
         command: |
-          ssh -o StrictHostKeyChecking=no $USER@$IP "~/deploy.sh"
+          ssh -o StrictHostKeyChecking=no $USER@$IP "./deploy.sh"
