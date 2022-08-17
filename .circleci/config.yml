@@ -8,10 +8,6 @@ jobs:
     working_directory: ~/demo
     steps:
       - checkout
-      - node/install
-      - run:
-          name: Check current version of node
-          command: node -v
       - run:
           name: Get and install node version manager.
           command: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
