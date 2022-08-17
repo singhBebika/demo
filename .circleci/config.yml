@@ -8,10 +8,7 @@ jobs:
     working_directory: ~/demo
     steps:
       - checkout
-      - run:
-          name: Initializing dependencies
-          command: |
-            npm install
+
       - run:
           name: Run package
           command: |
