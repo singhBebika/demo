@@ -10,13 +10,16 @@ jobs:
       - checkout
       - run:
           name: Get and install node version manager.
-          command: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
+          command: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
+
+      - run:
+          name: Use Node version 12
+          command: source ~/.profile
+
       - run:
           name: Install Node version 16.10.0 using NVM
           command: nvm install 16.10.0
-      - run:
-          name: Use Node version 12
-          command: nvm use 16.10.0
+
       - run:
           name: Run package
           command: |
