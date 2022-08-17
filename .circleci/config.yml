@@ -4,21 +4,10 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: node:16.10.0
+      - image: cimg/node:16.14.2
     working_directory: ~/demo
     steps:
       - checkout
-      - run:
-          name: Get and install node version manager.
-          command: curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash
-
-      - run:
-          name: Use Node version 12
-          command: source ~/.profile
-
-      - run:
-          name: Install Node version 16.10.0 using NVM
-          command: nvm install 16.10.0
 
       - run:
           name: Run package
