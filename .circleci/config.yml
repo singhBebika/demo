@@ -1,7 +1,14 @@
-version: 2.1
+version: 2
 
 jobs:
   build:
+    docker:
+      - image: node:16.13.0
+    working_directory: ~/demo
+    steps:
+      - checkout
+
+  pull-and-build:
     docker:
       - image: node:16.13.0
     steps:
