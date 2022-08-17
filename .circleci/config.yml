@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Run package
           command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "./deploy.sh"
+            ssh -o StrictHostKeyChecking=no $USER@$ID "./demo/demo_deploy.sh"
 # Orchestrate our job run sequence
 workflows:
   version: 2
