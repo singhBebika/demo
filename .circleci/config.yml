@@ -1,30 +1,6 @@
-version: 2
+version: 2.1
 
 jobs:
-  build:
-    docker:
-      - image: node:16.13.0
-    working_directory: ~/demo
-    steps:
-      - checkout
-      # Download and cache dependicies
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{checksum "package.json"}}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-      - run: yarn install
-      - run:
-          name: Checking the Node.js version
-          command: |
-            node --version
-      - save_cache:
-          paths:
-            - node_modules
-          key: v1-dependicies -{{checksum "package.json"}}
-
-      - run: yarn build
-
   pull-and-build:
     docker:
       - image: node:16.13.0
@@ -34,3 +10,12 @@ jobs:
         name: Run Package
         command: |
           ssh -o StrictHostKeyChecking=no $USER@$IP "./deploy.sh"
+workflows:
+  version: 2
+  build-project:
+    jobs:
+      pull-and-build:
+        filters:
+          branches:
+            only:
+              - main
