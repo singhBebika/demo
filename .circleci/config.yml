@@ -40,7 +40,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/circleci/demo"
+            scp -r -o StrictHostKeyChecking=no build public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/circlecidemo/demo"
 
 # Orchestrate our job run sequence
 workflows:
