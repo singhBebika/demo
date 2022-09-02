@@ -18,7 +18,6 @@ fi;
 cp -r build/* .next/
 rm -rf build
 
-pm2 describe demo > /main/null
 RUNNING=$?
 if [ "${RUNNING}" -ne 0 ]; then
   pm2 start --name=demo npm -- start
