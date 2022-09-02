@@ -3,9 +3,9 @@
 cd ~/demo
 
 #export pm2 path
-export PATH=$PATH:/home/circleci/.nvm/versions/node/v16.15.0/bin
+export PATH=$PATH:/home/bebika/.nvm/versions/node/v16.10.0/bin
 #export yarn path
-export PATH=$PATH:/home/circleci/.nvm/versions/node/v16.15.0/bin
+export PATH=$PATH:/home/bebika/.nvm/versions/node/v16.10.0/bin
 
 yarn install
 
