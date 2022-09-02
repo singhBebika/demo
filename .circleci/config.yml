@@ -8,10 +8,10 @@ jobs:
     working_directory: ~/demo
     steps:
       - checkout
-      # - run:
-      #     name: Run package
-      #     command: |
-      #       ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
+      - run:
+          name: Run package
+          command: |
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
       - run:
           name: Checking the Node.js version
           command: |
