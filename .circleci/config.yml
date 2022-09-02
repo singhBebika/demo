@@ -9,21 +9,18 @@ jobs:
     steps:
       - checkout
 
-      # - run:
-      #     name: Run package
-      #     command: |
-      #       ssh -o StrictHostKeyChecking=no $USER@$ID "./demo/demo_deploy.sh"
-       - run:
+      - run:
           name: Run package
           command: |
             ssh -o StrictHostKeyChecking=no bebika@circlecidemo "./demo/deploy_demo.sh"
+
       - run:
           name: Build package
           command: |
             yarn build
-      
+
       - run:
-          name: Deploy package 
+          name: Deploy package
           command: |
             scp -r -o StrictHostKeyChecking=no build public package.json yarn.lock deploy_demo.sh bebika@circlecidemo:"/home/circleci/demo/"
 
