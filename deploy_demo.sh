@@ -7,7 +7,7 @@ export PATH=$PATH:/home/bebika/.nvm/versions/node/v16.10.0/bin
 #export yarn path
 export PATH=$PATH:/home/bebika/.nvm/versions/node/v16.10.0/bin
 
-yarn install
+npm install
 
 if [ -d ".next" ]; then
   rm -r .next/*
@@ -21,7 +21,7 @@ rm -rf build
 pm2 describe demo > /main/null
 RUNNING=$?
 if [ "${RUNNING}" -ne 0 ]; then
-  pm2 start --name=demo yarn -- start
+  pm2 start --name=demo npm -- start
   pm2 save --force
 else
   pm2 restart demo
