@@ -18,12 +18,3 @@ fi;
 cp -r build/* .next/
 rm -rf build
 
-RUNNING=$?
-if [ "${RUNNING}" -ne 0 ]; then
-  pm2 start --name=demo npm -- start
-  pm2 save --force
-else
-  pm2 restart demo
-  pm2 save --force
-fi;
-pm2 reload demo
