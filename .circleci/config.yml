@@ -11,7 +11,7 @@ jobs:
       - run:
           name: Run package
           command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "./demo/deploy_demo.sh"
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
       - run:
           name: Checking the Node.js version
           command: |
