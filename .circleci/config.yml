@@ -40,7 +40,7 @@ jobs:
   resource_class: medium
 
   # build and deploy to development
-  build_and_deploy_to_develop:
+  build_and_deploy_to_main:
     docker:
       - image: google/cloud-sdk
 
@@ -98,77 +98,72 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            scp -i ~/.ssh/my-ssh-key deploy_demo.sh USER@ID:~/demo
+            scp -i ~/.ssh/google_compute_engine  deploy_demo.sh USER@ID:~/demo
 
       - run:
           name: Run package
           command: |
             ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
 
-  # build_and_deploy_to_production:
-  #   docker:
-  #     - image: google/cloud-sdk
+  build_and_deploy_to_production:
+    docker:
+      - image: google/cloud-sdk
 
-  #   working_directory: ~/demo
+    working_directory: ~/demo
 
-  #   steps:
-  #     - checkout
+    steps:
+      - checkout
+      - run:
+          name: Checking Node.JS version
+          command: |
+            node --version
 
-  #     - node/install:
-  #         install-yarn: true
-  #         lts: true
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
 
-  #     - run:
-  #         name: Checking Node.JS version
-  #         command: |
-  #           node --version
+      - run:
+          name: Initializing dependencies
+          command: |
+            yarn install
 
-  #     - restore_cache:
-  #         keys:
-  #           - v1-dependencies-{{ checksum "yarn.lock" }}
-  #           - v1-dependencies-
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
 
-  #     - run:
-  #         name: Initializing dependencies
-  #         command: |
-  #           yarn install
+      - run:
+          name: Authenticating and configuring the Google Cloud Platform
+          command: |
+            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
-  #     - save_cache:
-  #         key: v1-npm-deps-{{ checksum "yarn.lock" }}
-  #         paths:
-  #           - ./node_modules
+      - run:
+          name: connect with vm
+          command: |
+            gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
 
-  #     - run:
-  #         name: Authenticating and configuring the Google Cloud Platform
-  #         command: |
-  #           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-  #           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-  #           gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
+      - run:
+          name: generate ssh key
+          command: |
+            gcloud compute ssh circlecidemo
 
-  #     - run:
-  #         name: connect with vm
-  #         command: |
-  #           gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
+      - run:
+          name: Build package
+          command: |
+            yarn build
 
-  #     - run:
-  #         name: generate ssh key
-  #         command: |
-  #           gcloud compute ssh circlecidemo
+     - run:
+          name: Deploy package
+          command: |
+            scp -i ~/.ssh/google_compute_engine  deploy_demo.sh USER@ID:~/demo
 
-  #     - run:
-  #         name: Build package
-  #         command: |
-  #           yarn build
-
-  #     - run:
-  #         name: Deploy package
-  #         command: |
-  #           scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
-
-  #     - run:
-  #         name: Run package
-  #         command: |
-  #           ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
+      - run:
+          name: Run package
+          command: |
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
 
 # Orchestrate our job run sequence
 workflows:
