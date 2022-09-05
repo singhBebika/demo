@@ -34,7 +34,6 @@ jobs:
       - run:
           name: Build package
           command: |
-            unset CI
             yarn build
 
   # circleci server 8 GB RAM
@@ -50,10 +49,6 @@ jobs:
     steps:
       - checkout
 
-      - node/install:
-          install-yarn: true
-          lts: true
-
       - run:
           name: Checking Node.JS version
           command: |
@@ -82,70 +77,9 @@ jobs:
             gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
       - run:
-          name: connect with vm
+          name: update gcloud
           command: |
-            gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
-
-      - run:
-          name: generate ssh key
-          command: |
-            gcloud compute ssh circlecidemo
-
-      - run:
-          name: Build package
-          command: |
-            yarn build
-
-      - run:
-          name: Deploy package
-          command: |
-            gcloud compute scp build  public package.json yarn.lock deploy_demo.sh circlecidemo:instance/path
-
-      - run:
-          name: Run package
-          command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
-
-  build_and_deploy_to_production:
-    docker:
-      - image: google/cloud-sdk
-
-    working_directory: ~/demo
-
-    steps:
-      - checkout
-
-      - node/install:
-          install-yarn: true
-          lts: true
-
-      - run:
-          name: Checking Node.JS version
-          command: |
-            node --version
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn install
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-
-      - run:
-          name: Authenticating and configuring the Google Cloud Platform
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
-
+            gcloud components update
       - run:
           name: connect with vm
           command: |
@@ -161,14 +95,81 @@ jobs:
           command: |
             yarn build
 
-      - run:
+       - run:
           name: Deploy package
           command: |
-            gcloud compute scp build  public package.json yarn.lock deploy_demo.sh circlecidemo:instance/path
+            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
+      
       - run:
           name: Run package
           command: |
             ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
+
+  # build_and_deploy_to_production:
+  #   docker:
+  #     - image: google/cloud-sdk
+
+  #   working_directory: ~/demo
+
+  #   steps:
+  #     - checkout
+
+  #     - node/install:
+  #         install-yarn: true
+  #         lts: true
+
+  #     - run:
+  #         name: Checking Node.JS version
+  #         command: |
+  #           node --version
+
+  #     - restore_cache:
+  #         keys:
+  #           - v1-dependencies-{{ checksum "yarn.lock" }}
+  #           - v1-dependencies-
+
+  #     - run:
+  #         name: Initializing dependencies
+  #         command: |
+  #           yarn install
+
+  #     - save_cache:
+  #         key: v1-npm-deps-{{ checksum "yarn.lock" }}
+  #         paths:
+  #           - ./node_modules
+
+  #     - run:
+  #         name: Authenticating and configuring the Google Cloud Platform
+  #         command: |
+  #           echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+  #           gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
+  #           gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
+
+  #     - run:
+  #         name: connect with vm
+  #         command: |
+  #           gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
+
+  #     - run:
+  #         name: generate ssh key
+  #         command: |
+  #           gcloud compute ssh circlecidemo
+
+  #     - run:
+  #         name: Build package
+  #         command: |
+  #           yarn build
+
+
+  #     - run:
+  #         name: Deploy package
+  #         command: |
+  #           scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
+
+  #     - run:
+  #         name: Run package
+  #         command: |
+  #           ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
 
 # Orchestrate our job run sequence
 workflows:
