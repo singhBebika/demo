@@ -92,11 +92,6 @@ jobs:
             gcloud compute ssh circlecidemo
 
       - run:
-          name: Run package
-          command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
-
-      - run:
           name: Build package
           command: |
             yarn build
@@ -105,6 +100,11 @@ jobs:
           name: Deploy package
           command: |
             scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+
+      - run:
+          name: Run package
+          command: |
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
 
   build_and_deploy_to_production:
     docker:
@@ -157,11 +157,6 @@ jobs:
             gcloud compute ssh circlecidemo
 
       - run:
-          name: Run package
-          command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
-
-      - run:
           name: Build package
           command: |
             yarn build
@@ -170,6 +165,11 @@ jobs:
           name: Deploy package
           command: |
             scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+
+      - run:
+          name: Run package
+          command: |
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
 
 # Orchestrate our job run sequence
 workflows:
