@@ -98,7 +98,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
+            scp -i ~/.ssh/my-ssh-key deploy_demo.sh USER@ID:~/demo
 
       - run:
           name: Run package
