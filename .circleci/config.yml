@@ -95,11 +95,11 @@ jobs:
           command: |
             yarn build
 
-       - run:
+      - run:
           name: Deploy package
           command: |
             scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
-      
+
       - run:
           name: Run package
           command: |
@@ -159,7 +159,6 @@ jobs:
   #         name: Build package
   #         command: |
   #           yarn build
-
 
   #     - run:
   #         name: Deploy package
