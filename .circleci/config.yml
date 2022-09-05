@@ -8,14 +8,44 @@ jobs:
     working_directory: ~/demo
     steps:
       - checkout
-      - run:
-          name: Run package
-          command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
+      - node/install:
+        install-yarn: true
+        lts: true
+        
       - run:
           name: Checking the Node.js version
           command: |
             node --version
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: Initializing dependencies
+          command: |
+            yarn install
+
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+
+build_and_deploy:
+  docker:
+    - image: google/cloud-sdk
+  working_directory: ~/demo
+  steps:
+    - checkout
+    - node/install:
+        install-yarn: true
+        lts: true
+
+    - run:
+        name: Checking the Node.js version
+        command: |
+          node --version
 
       - restore_cache:
           keys:
@@ -47,6 +77,11 @@ jobs:
           name: generate ssh key
           command: |
             gcloud compute ssh circlecidemo
+
+      - run:
+          name: Run package
+          command: |
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
 
       - run:
           name: Build package
