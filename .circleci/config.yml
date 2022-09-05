@@ -155,7 +155,7 @@ jobs:
           command: |
             yarn build
 
-     - run:
+      - run:
           name: Deploy package
           command: |
             scp -i ~/.ssh/google_compute_engine  deploy_demo.sh USER@ID:~/demo
