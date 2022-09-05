@@ -11,7 +11,7 @@ jobs:
       - node/install:
         install-yarn: true
         lts: true
-        
+
       - run:
           name: Checking the Node.js version
           command: |
@@ -47,51 +47,52 @@ build_and_deploy:
         command: |
           node --version
 
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
+    - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "yarn.lock" }}
+          - v1-dependencies-
 
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn install
+    - run:
+        name: Initializing dependencies
+        command: |
+          yarn install
 
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Authenticating and configuring the Google Cloud Platform
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
+    - save_cache:
+        key: v1-npm-deps-{{ checksum "yarn.lock" }}
+        paths:
+          - ./node_modules
 
-      - run:
-          name: connect with vm
-          command: |
-            gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
+    - run:
+        name: Authenticating and configuring the Google Cloud Platform
+        command: |
+          echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
+          gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
+          gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
-      - run:
-          name: generate ssh key
-          command: |
-            gcloud compute ssh circlecidemo
+    - run:
+        name: connect with vm
+        command: |
+          gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
 
-      - run:
-          name: Run package
-          command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
+    - run:
+        name: generate ssh key
+        command: |
+          gcloud compute ssh circlecidemo
 
-      - run:
-          name: Build package
-          command: |
-            yarn build
+    - run:
+        name: Run package
+        command: |
+          ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
 
-      - run:
-          name: Deploy package
-          command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+    - run:
+        name: Build package
+        command: |
+          yarn build
+
+    - run:
+        name: Deploy package
+        command: |
+          scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
 
 # Orchestrate our job run sequence
 workflows:
