@@ -99,12 +99,12 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
 
       - run:
           name: Run package
           command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
 
   build_and_deploy_to_production:
     docker:
@@ -164,12 +164,12 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika_singh/demo"
 
       - run:
           name: Run package
           command: |
-            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika/demo/deploy_demo.sh"
+            ssh -o StrictHostKeyChecking=no $USER@$ID "/home/bebika_singh/demo/deploy_demo.sh"
 
 # Orchestrate our job run sequence
 workflows:
