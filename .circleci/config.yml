@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Initializing dependencies
           command: |
-            yarn bootstrap
+            yarn install
 
       - save_cache:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
@@ -67,7 +67,7 @@ jobs:
       - run:
           name: Initializing dependencies
           command: |
-            yarn bootstrap
+            yarn install
 
       - save_cache:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
@@ -132,7 +132,7 @@ jobs:
       - run:
           name: Initializing dependencies
           command: |
-            yarn bootstrap
+            yarn install
 
       - save_cache:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
