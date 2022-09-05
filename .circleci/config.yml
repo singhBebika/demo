@@ -35,9 +35,7 @@ jobs:
       - run:
         name: connect with vm
         command: |
-          gcloud compute ssh --project=readytowork \
-          --zone=asia-northeast1-b \
-          circlecidemo
+          gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
 
       - run:
         name: generate ssh key
