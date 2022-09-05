@@ -33,14 +33,14 @@ jobs:
             - ./node_modules
 
       - run:
-        name: connect with vm
-        command: |
-          gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
+          name: connect with vm
+          command: |
+            gcloud compute ssh --project=readytowork --zone=asia-northeast1-b circlecidemo
 
       - run:
-        name: generate ssh key
-        command: |
-          gcloud compute ssh circlecidemo
+          name: generate ssh key
+          command: |
+            gcloud compute ssh circlecidemo
 
       - run:
           name: Build package
