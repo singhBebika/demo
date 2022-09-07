@@ -83,6 +83,11 @@ jobs:
             gcloud compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
 
       - run:
+          name: generate ssh key
+          command: |
+            gcloud compute ssh circlecidemo
+
+      - run:
           name: Deploy package
           command: |
             gcloud compute scp package.json circlecidemo:~/demo
