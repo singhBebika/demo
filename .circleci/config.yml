@@ -68,6 +68,10 @@ jobs:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+      - run:
+          name: Build package
+          command: |
+            yarn build
 
       - run:
           name: Authenticating and configuring the Google Cloud Platform
@@ -91,14 +95,9 @@ jobs:
             gcloud compute ssh circlecidemo
 
       - run:
-          name: Build package
-          command: |
-            yarn build
-
-      - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+            gcloud compute scp  build  public package.json yarn.lock deploy_demo.sh circlecidemo:~/demo
 
       - run:
           name: Run package
@@ -132,6 +131,10 @@ jobs:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+      - run:
+          name: Build package
+          command: |
+            yarn build
 
       - run:
           name: Authenticating and configuring the Google Cloud Platform
@@ -151,14 +154,9 @@ jobs:
             gcloud compute ssh circlecidemo
 
       - run:
-          name: Build package
-          command: |
-            yarn build
-
-      - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USER@$ID:"/home/bebika/demo"
+            gcloud compute scp  build  public package.json yarn.lock deploy_demo.sh circlecidemo:~/demo
 
       - run:
           name: Run package
