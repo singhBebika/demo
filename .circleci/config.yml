@@ -68,17 +68,6 @@ jobs:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run:
-          name: Build package
-          command: |
-            yarn build
-
-      - run:
-          name: Authenticating and configuring the Google Cloud Platform
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
       - run:
           name: update gcloud
@@ -95,9 +84,14 @@ jobs:
             gcloud compute ssh circlecidemo
 
       - run:
+          name: Build package
+          command: |
+            yarn build
+
+      - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USERS@$ID:"/home/bebika/demo"
+            scp -r -o StrictHostKeyChecking=no .next  public package.json yarn.lock deploy_demo.sh $USERS@$ID:"/home/bebika/demo"
 
       - run:
           name: Run package
@@ -131,17 +125,6 @@ jobs:
           key: v1-npm-deps-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run:
-          name: Build package
-          command: |
-            yarn build
-
-      - run:
-          name: Authenticating and configuring the Google Cloud Platform
-          command: |
-            echo $GCLOUD_SERVICE_KEY | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
       - run:
           name: connect with vm
@@ -154,9 +137,14 @@ jobs:
             gcloud compute ssh circlecidemo
 
       - run:
+          name: Build package
+          command: |
+            yarn build
+
+      - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no build  public package.json yarn.lock deploy_demo.sh $USERS@$ID:"/home/bebika/demo"
+            scp -r -o StrictHostKeyChecking=no .next  public package.json yarn.lock deploy_demo.sh $USERS@$ID:"/home/bebika/demo"
 
       - run:
           name: Run package
