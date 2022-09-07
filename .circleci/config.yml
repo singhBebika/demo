@@ -86,7 +86,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            gcloud compute scp package.json data circlecidemo:~/demo
+            gcloud compute scp package.json circlecidemo:~/demo
 
   build_and_deploy_to_production:
     docker:
@@ -129,7 +129,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            gcloud compute scp package.json data circlecidemo:~/demo
+            gcloud compute scp package.json circlecidemo:~/demo
 
 # Orchestrate our job run sequence
 workflows:
