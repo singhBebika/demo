@@ -48,6 +48,9 @@ jobs:
 
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          lts: true
 
       - run:
           name: Checking Node.JS version
@@ -96,6 +99,9 @@ jobs:
 
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          lts: true
       - run:
           name: Checking Node.JS version
           command: |
