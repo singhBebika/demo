@@ -148,7 +148,6 @@ workflows:
                 - main
 
       - build_and_deploy_to_main:
-          context: demo
           filters:
             branches:
               only:
@@ -157,7 +156,6 @@ workflows:
             - build
 
       - build_and_deploy_to_production:
-          context: demo
           filters:
             tags:
               only:
