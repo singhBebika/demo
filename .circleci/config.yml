@@ -80,7 +80,7 @@ jobs:
       - run:
           name: connect with vm
           command: |
-            gcloud compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
+            gcloud --quiet compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
 
       - run:
           name: Deploy package
