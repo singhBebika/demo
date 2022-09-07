@@ -80,7 +80,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            gcloud compute scp package.json circlecidemo:~
+            gcloud --quiet compute scp package.json circlecidemo:~  --strict-host-key-checking=no
 
 # Orchestrate our job run sequence
 orbs:
