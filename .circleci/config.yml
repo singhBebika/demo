@@ -48,14 +48,6 @@ jobs:
 
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          lts: true
-
-      - run:
-          name: Checking Node.JS version
-          command: |
-            node --version
 
       - restore_cache:
           keys:
@@ -99,13 +91,6 @@ jobs:
 
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          lts: true
-      - run:
-          name: Checking Node.JS version
-          command: |
-            node --version
 
       - restore_cache:
           keys:
