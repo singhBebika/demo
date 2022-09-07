@@ -71,10 +71,6 @@ jobs:
             - ./node_modules
 
       - run:
-          name: update gcloud
-          command: |
-            gcloud components update
-      - run:
           name: connect with vm
           command: |
             gcloud compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
