@@ -71,6 +71,10 @@ jobs:
             - ./node_modules
 
       - run:
+          name: test
+          command: |
+            gcloud config set account 835062488456-compute@developer.gserviceaccount.com
+      - run:
           name: connect with vm
           command: |
             gcloud compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
