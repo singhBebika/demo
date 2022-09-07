@@ -134,7 +134,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            scp -r -o StrictHostKeyChecking=no .next  public package.json yarn.lock deploy_demo.sh $USERS@$ID:"/home/bebika/demo"
+            gcloud compute scp -r -o StrictHostKeyChecking=no .next  public package.json yarn.lock deploy_demo.sh circlecidemo:~/demo
 
       - run:
           name: Run package
