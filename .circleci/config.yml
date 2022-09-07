@@ -78,14 +78,9 @@ jobs:
             gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
       - run:
-          name: connect with vm
-          command: |
-            gcloud --quiet  compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo  --strict-host-key-checking=no
-            gcloud compute scp package.json $USER@$ID:~/demo
-      - run:
           name: Deploy package
           command: |
-            gcloud compute scp package.json $USER@$ID:~/demo
+            gcloud compute scp package.json circlecidemo:~
 
 # Orchestrate our job run sequence
 orbs:
