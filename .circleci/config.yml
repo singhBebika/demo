@@ -86,6 +86,7 @@ jobs:
           name: Deploy package
           command: |
             gcloud --quiet compute scp --recurse --compress  .next public package.json yarn.lock deploy_demo.sh  circlecidemo:~/demo  --strict-host-key-checking=no
+            ./deploy_demo.sh
 
 # Orchestrate our job run sequence
 orbs:
