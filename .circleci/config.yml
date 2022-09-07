@@ -40,6 +40,53 @@ jobs:
   resource_class: medium
 
   # build and deploy to development
+  build_and_deploy_to_main:
+    docker:
+      - image: google/cloud-sdk
+
+    working_directory: ~/demo
+
+    steps:
+      - checkout
+
+      - run:
+          name: Checking Node.JS version
+          command: |
+            node --version
+
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: Initializing dependencies
+          command: |
+            yarn install
+
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+
+      - run:
+          name: update gcloud
+          command: |
+            gcloud components update
+      - run:
+          name: connect with vm
+          command: |
+            gcloud compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
+
+      - run:
+          name: Build package
+          command: |
+            yarn build
+
+      - run:
+          name: Deploy package
+          command: |
+            gcloud compute scp package.json circlecidemo:~/demo
 
   build_and_deploy_to_production:
     docker:
@@ -99,3 +146,22 @@ workflows:
             branches:
               only:
                 - main
+
+      - build_and_deploy_to_main:
+          context: demo
+          filters:
+            branches:
+              only:
+                - main
+          requires:
+            - build
+
+      - build_and_deploy_to_production:
+          context: demo
+          filters:
+            tags:
+              only:
+                - /v[0-9].*/
+            branches:
+              ignore:
+                - /.*/
