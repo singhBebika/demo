@@ -48,24 +48,6 @@ jobs:
 
     steps:
       - checkout
-      - node/install:
-          install-yarn: true
-          node-version: "16.10.0"
-      - run: node --version
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn install
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
 
       - run:
           name: update gcloud
@@ -75,11 +57,6 @@ jobs:
           name: connect with vm
           command: |
             gcloud compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo
-
-      - run:
-          name: Build package
-          command: |
-            yarn build
 
       - run:
           name: Deploy package
