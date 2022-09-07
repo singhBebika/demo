@@ -48,6 +48,27 @@ jobs:
 
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          lts: true
+
+      - run:
+          name: Checking Node.JS version
+          command: |
+            node --version
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: Initializing dependencies
+          command: |
+            yarn bootstrap
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
 
       - run:
           name: update gcloud
@@ -71,6 +92,27 @@ jobs:
 
     steps:
       - checkout
+      - node/install:
+          install-yarn: true
+          lts: true
+
+      - run:
+          name: Checking Node.JS version
+          command: |
+            node --version
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "yarn.lock" }}
+            - v1-dependencies-
+
+      - run:
+          name: Initializing dependencies
+          command: |
+            yarn bootstrap
+      - save_cache:
+          key: v1-npm-deps-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
 
       - run:
           name: update gcloud
@@ -88,6 +130,8 @@ jobs:
             gcloud compute scp package.json circlecidemo:~/demo
 
 # Orchestrate our job run sequence
+orbs:
+  node: circleci/node@4.7.0
 workflows:
   version: 2
   build-project:
@@ -103,9 +147,6 @@ workflows:
             branches:
               only:
                 - main
-          requires:
-            - build
-
       - build_and_deploy_to_production:
           filters:
             tags:
