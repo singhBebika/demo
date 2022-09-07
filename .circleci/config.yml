@@ -77,10 +77,15 @@ jobs:
             gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
             gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
 
+       - run:
+          name: Build package
+          command: |
+            yarn build
+
       - run:
           name: Deploy package
           command: |
-            gcloud --quiet compute scp .next  public package.json yarn.lock deploy_demo.sh  circlecidemo:~/demo  --strict-host-key-checking=no
+            gcloud --quiet compute scp next public package.json yarn.lock deploy_demo.sh  circlecidemo:~/demo  --strict-host-key-checking=no
       - run:
           name: Run package
           command: |
