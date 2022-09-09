@@ -85,7 +85,7 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            gcloud --quiet compute scp --recurse --compress  .next public package.json yarn.lock deploy_demo.sh  circlecidemo:~/demo  --strict-host-key-checking=no
+            gcloud --quiet compute scp --recurse --compress  .next public package.json yarn.lock deploy_demo.sh  circlecidemo:/home/bebika_singh/demo  --strict-host-key-checking=no
             chmod u+x ./deploy_demo.sh
             pwd
             ./deploy_demo.sh
