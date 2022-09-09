@@ -5,7 +5,7 @@ export PATH=$PATH:/home/bebika_singh/.nvm/versions/node/v16.10.0/bin
 
 yarn install
 
-
+pm2 describe demo > /dev/null
 RUNNING=$?
 if [ "${RUNNING}" -ne 0 ]; then
   pm2 start --name=demo yarn -- start
