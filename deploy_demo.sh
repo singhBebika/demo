@@ -7,4 +7,4 @@ yarn install
 
 
 pm2 start yarn --interpreter bash --name demo -- start
-pm2 log
+pm2 reload demo
