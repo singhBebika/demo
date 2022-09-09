@@ -1,8 +1,9 @@
 
 #!/bin/bash
 cd ~/demo
-export PATH=$PATH:/home/bebika_singh/.nvm/versions/node/v16.10.0/bin/pm2
-export PATH=$PATH:/home/bebika_singh/.nvm/versions/node/v16.10.0/bin/yarn
+export PATH=$PATH:/home/bebika_singh/.nvm/versions/node/v16.10.0/bin
+export PATH=$PATH:/home/bebika_singh/.nvm/versions/node/v16.10.0/bin
+
 yarn install
 
 
