@@ -1,7 +1,6 @@
-
+export PATH=$PATH:/home/bebika_singh/.nvm/versions/node/v16.15.0/bin
 #!/bin/bash
 cd ~/demo
-npm install pm2 -g
 
 yarn install
 
