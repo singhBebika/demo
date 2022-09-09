@@ -1,46 +1,8 @@
 version: 2.1
 
 jobs:
-  # Job for build for other branches
-  build:
-    docker:
-      - image: cimg/node:16.14.2
-
-    working_directory: ~/demo
-
-    steps:
-      - checkout
-
-      - run:
-          name: Checking the Node.js version
-          command: |
-            node --version
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn install
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-
-      - run:
-          name: Build package
-          command: |
-            yarn build
-
-  # circleci server 8 GB RAM
-  resource_class: medium
-
   # build and deploy to development
-  build_and_deploy_to_main:
+  build:
     docker:
       - image: google/cloud-sdk
 
@@ -96,12 +58,6 @@ workflows:
   version: 2
   build-project:
     jobs:
-      - build:
-          filters:
-            branches:
-              only:
-                - main
-
       - build_and_deploy_to_main:
           filters:
             branches:
