@@ -58,7 +58,7 @@ workflows:
   version: 2
   build-project:
     jobs:
-      - build_and_deploy_to_main:
+      - build:
           filters:
             branches:
               only:
