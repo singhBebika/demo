@@ -2,11 +2,7 @@
 #!/bin/bash
 cd ~/demo
 
-#export pm2 
-export PATH=$PATH:/home/bebika/.nvm/versions/node/v16.15.0/bin
-#export yarn
-export PATH=$PATH:/home/bebika/.nvm/versions/node/v16.15.0/bin
-
+npm install pm2 -g
 yarn install
 
 if [ -d ".next" ]; then
