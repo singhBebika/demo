@@ -85,7 +85,6 @@ jobs:
       - run:
           name: Deploy package
           command: |
-            gcloud --quiet compute ssh --project=readytoworkjapan --zone=asia-northeast1-b circlecidemo --strict-host-key-checking=no
             gcloud --quiet compute scp --recurse --compress  .next public package.json yarn.lock deploy_demo.sh  circlecidemo:~/demo  --strict-host-key-checking=no
             chmod u+x ./deploy_demo.sh
             ./deploy_demo.sh
